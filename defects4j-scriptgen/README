@@ -31,7 +31,7 @@ defects4j
 
 4. checkout repositories and generate difference summary files
     a. configure script generation project
-        i. checkout project:defects4j-scriptgen(address??)
+        i. checkout project:defects4j-scriptgen (this project)
         ii. open it with eclipse.
         iii. configure directory constants in file "Constants.java" following the COMMENT code
     
