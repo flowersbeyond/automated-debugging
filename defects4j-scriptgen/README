@@ -1,0 +1,61 @@
+#this file is used for organizing experiment directories
+
+DATE: 2016.3.21
+AIM:  tidy up defects4j repositories
+
+$Defects4jDir = your defects4j root directory
+
+1. download defects4j from: https://github.com/rjust/defects4j
+2. follow the instructions at Readme.md, and set up defects4j repositories.
+3. the directory should look like this:
+defects4j
+   |
+   |--- project_repos:     The version control repositories of the provided projects.
+   |
+   |--- major:             The Major mutation framework.
+   |
+   |--- framework:         Libraries and executables of the database abstraction and
+       |                   test execution framework.
+       |
+       |--- bin:           Command line interface to Defects4J.
+       |
+       |--- core:          The modules of the core framework.
+       |
+       |--- lib:           Libraries used in the core framework.
+       |
+       |--- util:          Util scripts used by Defects4J.
+       |
+       |--- projects:      Project-specific resource files.
+       |
+       |--- test:          Scripts to test the framework.
+
+4. checkout repositories and generate difference summary files
+    a. configure script generation project
+        i. checkout project:defects4j-scriptgen(address??)
+        ii. open it with eclipse.
+        iii. configure directory constants in file "Constants.java" following the COMMENT code
+    
+    b. extract all versions of program repositories
+        i. run "RepExtractor.java", this will generate a "checkout_all.sh" under "$Defects4jDir".
+	ii. run "checkout_all.sh", this will extract all versions of defects4j programs under "$Defects4jDir/testprojects". The directory structure would look like this:
+
+defects4j
+    |
+    |---testprojects
+        |---Chart
+            |---v1
+                |---b:		the buggy version
+                |---f:		the fixed version
+            |---v2
+            |---...
+        |---Closure
+        |---...
+    
+    c. generate difference summary files
+        i. run "DiffGenerator1.java", this will generate a "gen_diff.sh" under "$Defects4jDir".
+        ii. run "gen_diff.sh", this will generate a "classes_modified" file under the directory of each buggy version of each extracted program repository (for example: "$Defects4jDir/testprojects/Chart/v1/b/classes_modified")
+        iii. run "DiffGenerator2.java", this will generate a "gen_diff_all.sh" under each extracted program repository root (for example:"$Defects4jDir/testprojects/Chart/gen_diff_all.sh")
+        iv. run all "gen_diff_all.sh" under all 5 program repositories, this will generate a "classes_modified_summary" under each each extracted program repository root (for example: "$Defects4jDir/testprojects/Chart/classes_modified_summary")
+        v. scan the 5 "classes_modified_summary" files and you can get a general idea of possible fix patterns".
+
+
